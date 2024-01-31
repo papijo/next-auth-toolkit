@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Created by Papijo",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
