@@ -23,8 +23,19 @@ export const {
     },
   },
   callbacks: {
+    async signIn({ user, account }) {
+      // Allow OAuth without email verification
+      if (account?.provider !== "credentials") return true;
+
+      const existingUser = await getUserById(user.id);
+
+      if (!existingUser?.emailVerified) return false;
+
+      // TODO: Add 2FA Check
+
+      return true;
+    },
     async session({ token, session }) {
-      console.log({ sessionToken: token });
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -52,3 +63,5 @@ export const {
   session: { strategy: "jwt" },
   ...authConfig,
 });
+
+// Start at 4:07:06
