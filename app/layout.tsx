@@ -3,6 +3,7 @@ import { Urbanist } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { Toaster } from "sonner";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={urbanist.className}>{children}</body>
+        <body className={urbanist.className}>
+          <Toaster />
+          {children}
+        </body>
       </html>
     </SessionProvider>
   );

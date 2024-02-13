@@ -56,10 +56,13 @@ export const {
         session.user.role = token.role;
       }
 
+      if (session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+      }
+
       return session;
     },
     async jwt({ token }) {
-      console.log({ token });
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
@@ -67,6 +70,7 @@ export const {
       if (!existingUser) return token;
 
       token.role = existingUser.role;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       return token;
     },
@@ -75,5 +79,3 @@ export const {
   session: { strategy: "jwt" },
   ...authConfig,
 });
-
-// Start at 4:07:06
